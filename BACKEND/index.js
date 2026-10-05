@@ -21,6 +21,9 @@ const conexion = mysql.createPool({
   connectionLimit: 10
 });
 
+app.get('/', (req, res) => {
+  res.send('API de la Veterinaria funcionando correctamente en Render 🚀');
+});
 // GET /consultas (JOIN de consultas con veterinarios y mascotas)
 app.get('/consultas', (req, res) => {
   const sql = `
