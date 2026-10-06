@@ -7,9 +7,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cors()); // Permite llamadas HTTP desde el frontend (React / Vercel / Render)
+app.use(cors());
 
-// Pool de conexión con soporte SSL para Aiven Cloud
+
 const conexion = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -25,7 +25,6 @@ app.get('/', (req, res) => {
   res.send('API de la Veterinaria funcionando correctamente en Render 🚀');
 });
 
-// GET /consultas (LEFT JOIN para no perder registros y DATE_FORMAT para la fecha)
 app.get('/consultas', (req, res) => {
   const sql = `
     SELECT 
@@ -74,7 +73,7 @@ app.get('/mascotas', (req, res) => {
   });
 });
 
-// POST /consultas (Registrar nueva consulta médica)
+// POST /consultas
 app.post('/consultas', (req, res) => {
   const { veterinario_id, mascota_id, diagnostico, precio, fecha } = req.body;
   

@@ -15,20 +15,18 @@ function ListaConsultas({ consultas = [], onUpdate }) {
       axios.delete(`https://veterinaria-6svw.onrender.com/consultas/${id}`)
         .then(res => {
           alert(res.data.message || 'Consulta eliminada con éxito');
-          onUpdate(); // Refresca la lista desde la base de datos
+          onUpdate(); 
         })
         .catch(err => console.error('Error al eliminar consulta:', err));
     }
   };
 
-  // Función de resguardo para formatear el precio y evitar el error $NaN
   const formatearPrecio = (valor) => {
     if (valor === null || valor === undefined) return '0.00';
     const num = parseFloat(valor);
     return isNaN(num) ? '0.00' : num.toFixed(2);
   };
 
-  // Función de resguardo para formatear fechas de MySQL (ISO string o fecha simple)
   const formatearFecha = (fecha) => {
     if (!fecha) return '-';
     const strFecha = String(fecha);
@@ -69,7 +67,7 @@ function ListaConsultas({ consultas = [], onUpdate }) {
                 </tr>
               ) : (
                 consultas.map(c => {
-                  // Mapeo flexible de respaldos: busca el nombre, o muestra el ID si el JOIN no se ejecutó en backend
+               
                   const nombreVet = c.veterinario || c.nombre_veterinario || (c.veterinario_id ? `Vet ID: ${c.veterinario_id}` : '-');
                   const nombreMascota = c.mascota || c.nombre_mascota || (c.mascota_id ? `Mascota ID: ${c.mascota_id}` : '-');
                   const especieMascota = c.especie || c.especie_mascota || '-';

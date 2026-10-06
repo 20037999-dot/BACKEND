@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function EditarConsulta({ consulta, onUpdate, onCancel }) {
-  // Ajustar fecha para el formato YYYY-MM-DD del input type="date"
+ 
   const fechaFormateada = consulta.fecha ? consulta.fecha.split('T')[0] : '';
 
   const [formData, setFormData] = useState({
@@ -38,7 +38,7 @@ function EditarConsulta({ consulta, onUpdate, onCancel }) {
     axios.put(`https://veterinaria-6svw.onrender.com/consultas/${consulta.id}`, formData)
       .then(res => {
         alert(res.data.message || 'Consulta actualizada correctamente');
-        onUpdate(); // Refresca la lista y cierra el modal/formulario de edición
+        onUpdate(); 
       })
       .catch(err => console.error('Error al actualizar consulta:', err));
   };
