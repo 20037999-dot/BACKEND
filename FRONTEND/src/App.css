@@ -1,74 +1,42 @@
 /* ==========================================================================
-   Sistema de Gestión Veterinaria — estilos
-   Tema claro por defecto; tema oscuro automático según la preferencia del
-   sistema o navegador (prefers-color-scheme).
-   Contraste objetivo: WCAG AA (4.5:1 texto normal, 3:1 controles y bordes).
+   Sistema de Gestión Veterinaria — Estilo Moderno Oscuro (Slate & Emerald)
    ========================================================================== */
 
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
 
-  /* Superficies */
-  --bg: #f3f6fb;
-  --surface: #ffffff;
-  --surface-2: #eef2f8;
-  --surface-hover: #e6edf8;
-  --input-bg: #ffffff;
+  /* Superficies estilo Slate */
+  --bg: #141820;
+  --surface: #222834;
+  --surface-2: #1b202a;
+  --surface-hover: #2c3444;
+  --input-bg: #353d4d;
 
   /* Texto */
-  --text: #1a202c;
-  --text-muted: #475467;
-  --placeholder: #667085;
+  --text: #f3f4f6;
+  --text-muted: #9ca3af;
+  --placeholder: #8c95a5;
 
   /* Bordes */
-  --border: #d3dbe8;
-  --border-strong: #8a96a8; /* bordes de controles: >= 3:1 sobre la superficie */
+  --border: #2e3646;
+  --border-strong: #454f62;
 
-  /* Acciones */
-  --primary: #2b6cb0;
-  --primary-hover: #234e82;
+  /* Acciones (Verde Esmeralda) */
+  --primary: #00c875;
+  --primary-hover: #00b067;
   --on-primary: #ffffff;
-  --danger: #c53030;
-  --danger-hover: #9b2c2c;
+  --danger: #e63946;
+  --danger-hover: #c92a37;
   --on-danger: #ffffff;
 
   /* Acentos */
-  --price: #1f6f46;
-  --focus-ring: #2b6cb0;
+  --price: #00e680;
+  --focus-ring: rgba(0, 200, 117, 0.4);
 
   /* Forma y sombra */
-  --radius: 12px;
-  --radius-sm: 8px;
-  --shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 4px 16px rgba(16, 24, 40, 0.06);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0e1319;
-    --surface: #171e27;
-    --surface-2: #1f2833;
-    --surface-hover: #263241;
-    --input-bg: #101620;
-
-    --text: #e8eef5;
-    --text-muted: #a9b6c6;
-    --placeholder: #8a98aa;
-
-    --border: #2c3744;
-    --border-strong: #6b7a8e;
-
-    --primary: #7ab8ff;
-    --primary-hover: #a3cdff;
-    --on-primary: #08121f;
-    --danger: #ff8f8f;
-    --danger-hover: #ffb0b0;
-    --on-danger: #2a0808;
-
-    --price: #6ee7a8;
-    --focus-ring: #a3cdff;
-
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 6px 20px rgba(0, 0, 0, 0.35);
-  }
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 /* ---------- Base ---------- */
@@ -85,33 +53,52 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--text);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
 
 .container {
+  width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 24px 16px 48px;
+  padding: 32px 16px 64px;
 }
 
 .container > h1 {
-  margin: 0 0 24px;
-  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2rem);
+  margin: 0 0 32px;
+  font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.2rem);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  text-align: center;
   color: var(--text);
+  letter-spacing: -0.02em;
 }
 
 h2 {
-  margin: 0 0 16px;
-  font-size: 1.2rem;
-  font-weight: 650;
+  position: relative;
+  margin: 0 0 24px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: center;
   color: var(--text);
+  padding-bottom: 10px;
+}
+
+/* Línea decorativa verde bajo los títulos de las tarjetas */
+.card > h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 4px;
+  background-color: var(--primary);
+  border-radius: 2px;
 }
 
 /* Estado de carga */
@@ -128,11 +115,10 @@ h2 {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 20px;
-  margin-bottom: 24px;
+  padding: 28px 24px;
+  margin-bottom: 28px;
 }
 
-/* Tarjeta del formulario de edición: resaltada */
 .card-editing {
   border: 2px solid var(--primary);
 }
@@ -142,7 +128,7 @@ h2 {
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 20px;
 }
 
 .form-group {
@@ -156,14 +142,14 @@ h2 {
 .form-grid select,
 .form-grid input {
   width: 100%;
-  min-height: 44px;
-  padding: 10px 12px;
+  min-height: 48px;
+  padding: 12px 16px;
   font: inherit;
   color: var(--text);
   background-color: var(--input-bg);
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: all 0.2s ease;
 }
 
 .form-grid input::placeholder {
@@ -173,14 +159,14 @@ h2 {
 
 .form-grid select:hover,
 .form-grid input:hover {
-  border-color: var(--text-muted);
+  border-color: var(--border-strong);
 }
 
 .form-grid select:focus-visible,
 .form-grid input:focus-visible {
-  outline: 3px solid var(--focus-ring);
-  outline-offset: 1px;
-  border-color: var(--focus-ring);
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 /* ---------- Botones ---------- */
@@ -190,25 +176,27 @@ h2 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 10px 18px;
+  min-height: 48px;
+  padding: 12px 24px;
   font: inherit;
   font-weight: 600;
   color: var(--on-primary);
   background-color: var(--primary);
-  border: 1px solid transparent;
+  border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.05s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
 .btn-submit {
   width: 100%;
+  margin-top: 8px;
 }
 
 .btn-submit:hover,
 .btn:hover {
   background-color: var(--primary-hover);
+  box-shadow: 0 4px 12px rgba(0, 200, 117, 0.25);
 }
 
 .btn-submit:active,
@@ -218,8 +206,8 @@ h2 {
 
 .btn-submit:focus-visible,
 .btn:focus-visible {
-  outline: 3px solid var(--focus-ring);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 /* Variantes */
@@ -232,16 +220,17 @@ h2 {
 .btn-delete:hover,
 .btn-cancel:hover {
   background-color: var(--danger-hover);
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.25);
 }
 
 /* Botones compactos dentro de la tabla */
 .btn-sm {
   min-height: 36px;
   padding: 6px 14px;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  border-radius: 8px;
 }
 
-/* Fila de acciones del formulario de edición */
 .form-actions {
   display: flex;
   gap: 12px;
@@ -251,24 +240,25 @@ h2 {
   flex: 1;
 }
 
-/* ---------- Tabla ---------- */
+/* ---------- Tabla Adaptativa ---------- */
 
 .table-container {
+  width: 100%;
   overflow-x: auto;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
+  background: var(--surface-2);
 }
 
 .custom-table {
   width: 100%;
-  min-width: 720px;
   border-collapse: collapse;
   font-size: 0.95rem;
 }
 
 .custom-table th,
 .custom-table td {
-  padding: 12px 14px;
+  padding: 14px 16px;
   text-align: left;
   vertical-align: middle;
   border-bottom: 1px solid var(--border);
@@ -279,9 +269,9 @@ h2 {
   top: 0;
   background: var(--surface-2);
   color: var(--text-muted);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -290,8 +280,8 @@ h2 {
   border-bottom: none;
 }
 
-.custom-table tbody tr:nth-child(even) {
-  background: color-mix(in srgb, var(--surface-2) 45%, transparent);
+.custom-table tbody tr {
+  transition: background-color 0.15s ease;
 }
 
 .custom-table tbody tr:hover {
@@ -314,25 +304,76 @@ h2 {
 .acciones {
   display: flex;
   gap: 8px;
+  align-items: center;
 }
 
-/* ---------- Responsive ---------- */
+/* ---------- Responsive (Móviles y Tablets) ---------- */
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .container {
     padding: 16px 12px 32px;
   }
 
   .card {
-    padding: 16px;
+    padding: 20px 16px;
+    border-radius: 12px;
   }
 
   .form-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
 
   .form-actions {
     flex-direction: column;
+  }
+
+  /* Conversión de la tabla a tarjetas en móviles */
+  .custom-table, 
+  .custom-table thead, 
+  .custom-table tbody, 
+  .custom-table th, 
+  .custom-table td, 
+  .custom-table tr {
+    display: block;
+  }
+
+  .custom-table thead {
+    display: none;
+  }
+
+  .custom-table tbody tr {
+    margin-bottom: 12px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+
+  .custom-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    text-align: right;
+  }
+
+  .custom-table td:last-child {
+    border-bottom: none;
+    padding-top: 12px;
+    justify-content: flex-end;
+  }
+
+  /* Muestra la etiqueta según el atributo data-label del td */
+  .custom-table td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-right: 12px;
   }
 }
 
