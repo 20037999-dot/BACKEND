@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import EditarConsulta from './EditarConsulta';
 
-function ListaConsultas({ consultas, onUpdate }) {
+function ListaConsultas({ consultas = [], onUpdate }) {
   const [consultaSeleccionada, setConsultaSeleccionada] = useState(null);
 
   const manejarActualizacion = () => {
@@ -14,11 +14,23 @@ function ListaConsultas({ consultas, onUpdate }) {
     if (window.confirm('¿Seguro que deseas eliminar esta consulta médica?')) {
       axios.delete(`https://veterinaria-6svw.onrender.com/consultas/${id}`)
         .then(res => {
-          alert(res.data.message);
+          alert(res.data.message || 'Consulta eliminada con éxito');
           onUpdate(); // Refresca la lista desde la base de datos
         })
         .catch(err => console.error('Error al eliminar consulta:', err));
     }
+  };
+
+  // Función de resguardo para formatear el precio y evitar el error $NaN
+  const formatearPrecio = (valor) => {
+    const num = parseFloat(valor);
+    return isNaN(num) ? '0.00' : num.toFixed(2);
+  };
+
+  // Función de resguardo para formatear fechas
+  const formatearFecha = (fecha) => {
+    if (!fecha) return '-';
+    return String(fecha).split('T')[0];
   };
 
   return (
@@ -47,51 +59,59 @@ function ListaConsultas({ consultas, onUpdate }) {
               </tr>
             </thead>
             <tbody>
-              {consultas.length === 0 ? (
+              {!consultas || consultas.length === 0 ? (
                 <tr>
                   <td colSpan="7" style={{ textAlign: 'center', color: '#a0aec0' }}>
                     No hay consultas registradas.
                   </td>
                 </tr>
               ) : (
-                consultas.map(c => (
-                  <tr key={c.id}>
-                    <td><strong>{c.veterinario}</strong></td>
-                    <td>{c.mascota}</td>
-                    <td>{c.especie}</td>
-                    <td>{c.diagnostico}</td>
-                    <td className="price-tag">${parseFloat(c.precio).toFixed(2)}</td>
-                    <td>{c.fecha ? c.fecha.split('T')[0] : ''}</td>
-                    <td style={{ display: 'flex', gap: '6px' }}>
-                      <button 
-                        onClick={() => setConsultaSeleccionada(c)}
-                        style={{
-                          backgroundColor: '#3182ce',
-                          color: 'white',
-                          border: 'none',
-                          padding: '6px 12px',
-                          borderRadius: '4px',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        Editar
-                      </button>
-                      <button 
-                        onClick={() => eliminarConsulta(c.id)}
-                        style={{
-                          backgroundColor: '#e53e3e',
-                          color: 'white',
-                          border: 'none',
-                          padding: '6px 12px',
-                          borderRadius: '4px',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
-                ))
+                consultas.map(c => {
+                  // Mapeo flexible con respaldos por si el backend usa nombres de columna distintos
+                  const nombreVet = c.veterinario || c.nombre_veterinario || c.veterinario_nombre || '-';
+                  const nombreMascota = c.mascota || c.nombre_mascota || c.mascota_nombre || '-';
+                  const especieMascota = c.especie || c.especie_mascota || '-';
+                  const diagnosticoMed = c.diagnostico || '-';
+
+                  return (
+                    <tr key={c.id}>
+                      <td><strong>{nombreVet}</strong></td>
+                      <td>{nombreMascota}</td>
+                      <td>{especieMascota}</td>
+                      <td>{diagnosticoMed}</td>
+                      <td className="price-tag">${formatearPrecio(c.precio)}</td>
+                      <td>{formatearFecha(c.fecha)}</td>
+                      <td style={{ display: 'flex', gap: '6px' }}>
+                        <button 
+                          onClick={() => setConsultaSeleccionada(c)}
+                          style={{
+                            backgroundColor: '#3182ce',
+                            color: 'white',
+                            border: 'none',
+                            padding: '6px 12px',
+                            borderRadius: '4px',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Editar
+                        </button>
+                        <button 
+                          onClick={() => eliminarConsulta(c.id)}
+                          style={{
+                            backgroundColor: '#e53e3e',
+                            color: 'white',
+                            border: 'none',
+                            padding: '6px 12px',
+                            borderRadius: '4px',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </table>

@@ -8,7 +8,31 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors()); // Permite llamadas HTTP desde el frontend (React / Vercel)
+// Endpoint en el backend (Node.js / Express)
+app.get('/consultas', async (req, res) => {
+  try {
+    const query = `
+      SELECT 
+        c.id,
+        v.nombre AS veterinario,
+        m.nombre AS mascota,
+        m.especie AS especie,
+        c.diagnostico AS diagnostico,
+        c.precio AS precio,
+        DATE_FORMAT(c.fecha, '%Y-%m-%d') AS fecha
+      FROM consultas c
+      INNER JOIN veterinarios v ON c.veterinario_id = v.id
+      INNER JOIN mascotas m ON c.mascota_id = m.id
+      ORDER BY c.fecha DESC
+    `;
 
+    const [rows] = await db.query(query); // O mysqlPool.query(query)
+    res.json(rows);
+  } catch (error) {
+    console.error("Error al obtener consultas:", error);
+    res.status(500).json({ error: "Error al obtener consultas" });
+  }
+});
 // Pool de conexión con soporte SSL para Aiven Cloud
 const conexion = mysql.createPool({
   host: process.env.DB_HOST,
