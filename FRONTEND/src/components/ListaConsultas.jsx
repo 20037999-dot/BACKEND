@@ -23,14 +23,16 @@ function ListaConsultas({ consultas = [], onUpdate }) {
 
   // Función de resguardo para formatear el precio y evitar el error $NaN
   const formatearPrecio = (valor) => {
+    if (valor === null || valor === undefined) return '0.00';
     const num = parseFloat(valor);
     return isNaN(num) ? '0.00' : num.toFixed(2);
   };
 
-  // Función de resguardo para formatear fechas
+  // Función de resguardo para formatear fechas de MySQL (ISO string o fecha simple)
   const formatearFecha = (fecha) => {
     if (!fecha) return '-';
-    return String(fecha).split('T')[0];
+    const strFecha = String(fecha);
+    return strFecha.includes('T') ? strFecha.split('T')[0] : strFecha;
   };
 
   return (
@@ -67,9 +69,9 @@ function ListaConsultas({ consultas = [], onUpdate }) {
                 </tr>
               ) : (
                 consultas.map(c => {
-                  // Mapeo flexible con respaldos por si el backend usa nombres de columna distintos
-                  const nombreVet = c.veterinario || c.nombre_veterinario || c.veterinario_nombre || '-';
-                  const nombreMascota = c.mascota || c.nombre_mascota || c.mascota_nombre || '-';
+                  // Mapeo flexible de respaldos: busca el nombre, o muestra el ID si el JOIN no se ejecutó en backend
+                  const nombreVet = c.veterinario || c.nombre_veterinario || (c.veterinario_id ? `Vet ID: ${c.veterinario_id}` : '-');
+                  const nombreMascota = c.mascota || c.nombre_mascota || (c.mascota_id ? `Mascota ID: ${c.mascota_id}` : '-');
                   const especieMascota = c.especie || c.especie_mascota || '-';
                   const diagnosticoMed = c.diagnostico || '-';
 
