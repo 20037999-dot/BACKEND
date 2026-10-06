@@ -12,7 +12,7 @@ function ListaConsultas({ consultas, onUpdate }) {
 
   const eliminarConsulta = (id) => {
     if (window.confirm('¿Seguro que deseas eliminar esta consulta médica?')) {
-      axios.delete(`http://localhost:3000/consultas/${id}`)
+      axios.delete(`https://veterinaria-6svw.onrender.com/consultas/${id}`)
         .then(res => {
           alert(res.data.message);
           onUpdate(); // Refresca la lista desde la base de datos

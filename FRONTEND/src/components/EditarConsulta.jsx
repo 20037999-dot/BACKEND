@@ -17,11 +17,11 @@ function EditarConsulta({ consulta, onUpdate, onCancel }) {
   const [mascotas, setMascotas] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/veterinarios')
+    axios.get('https://veterinaria-6svw.onrender.com/veterinarios')
       .then(res => setVeterinarios(res.data))
       .catch(err => console.error(err));
 
-    axios.get('http://localhost:3000/mascotas')
+    axios.get('https://veterinaria-6svw.onrender.com/mascotas')
       .then(res => setMascotas(res.data))
       .catch(err => console.error(err));
   }, []);

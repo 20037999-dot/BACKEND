@@ -8,7 +8,11 @@ function App() {
   const [consultas, setConsultas] = useState([]);
 
   const cargarConsultas = () => {
-    axios.get('http://localhost:3000/consultas')
+   // Antes (local):
+// axios.get('http://localhost:5000/mascotas')
+
+// Ahora (API en Render):
+axios.get('https://veterinaria-6svw.onrender.com/mascotas')
       .then(res => setConsultas(res.data))
       .catch(err => console.error('Error al obtener consultas:', err));
   };
