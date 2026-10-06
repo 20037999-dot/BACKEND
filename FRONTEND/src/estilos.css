@@ -1,0 +1,348 @@
+/* ==========================================================================
+   Sistema de Gestión Veterinaria — estilos
+   Tema claro por defecto; tema oscuro automático según la preferencia del
+   sistema o navegador (prefers-color-scheme).
+   Contraste objetivo: WCAG AA (4.5:1 texto normal, 3:1 controles y bordes).
+   ========================================================================== */
+
+:root {
+  color-scheme: light dark;
+
+  /* Superficies */
+  --bg: #f3f6fb;
+  --surface: #ffffff;
+  --surface-2: #eef2f8;
+  --surface-hover: #e6edf8;
+  --input-bg: #ffffff;
+
+  /* Texto */
+  --text: #1a202c;
+  --text-muted: #475467;
+  --placeholder: #667085;
+
+  /* Bordes */
+  --border: #d3dbe8;
+  --border-strong: #8a96a8; /* bordes de controles: >= 3:1 sobre la superficie */
+
+  /* Acciones */
+  --primary: #2b6cb0;
+  --primary-hover: #234e82;
+  --on-primary: #ffffff;
+  --danger: #c53030;
+  --danger-hover: #9b2c2c;
+  --on-danger: #ffffff;
+
+  /* Acentos */
+  --price: #1f6f46;
+  --focus-ring: #2b6cb0;
+
+  /* Forma y sombra */
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 4px 16px rgba(16, 24, 40, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1319;
+    --surface: #171e27;
+    --surface-2: #1f2833;
+    --surface-hover: #263241;
+    --input-bg: #101620;
+
+    --text: #e8eef5;
+    --text-muted: #a9b6c6;
+    --placeholder: #8a98aa;
+
+    --border: #2c3744;
+    --border-strong: #6b7a8e;
+
+    --primary: #7ab8ff;
+    --primary-hover: #a3cdff;
+    --on-primary: #08121f;
+    --danger: #ff8f8f;
+    --danger-hover: #ffb0b0;
+    --on-danger: #2a0808;
+
+    --price: #6ee7a8;
+    --focus-ring: #a3cdff;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 6px 20px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* ---------- Base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.container > h1 {
+  margin: 0 0 24px;
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+h2 {
+  margin: 0 0 16px;
+  font-size: 1.2rem;
+  font-weight: 650;
+  color: var(--text);
+}
+
+/* Estado de carga */
+.loading {
+  margin-top: 24px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* ---------- Tarjetas ---------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+/* Tarjeta del formulario de edición: resaltada */
+.card-editing {
+  border: 2px solid var(--primary);
+}
+
+/* ---------- Formularios ---------- */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.form-group {
+  min-width: 0;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-grid select,
+.form-grid input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--text);
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-grid input::placeholder {
+  color: var(--placeholder);
+  opacity: 1;
+}
+
+.form-grid select:hover,
+.form-grid input:hover {
+  border-color: var(--text-muted);
+}
+
+.form-grid select:focus-visible,
+.form-grid input:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 1px;
+  border-color: var(--focus-ring);
+}
+
+/* ---------- Botones ---------- */
+
+.btn-submit,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 18px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--on-primary);
+  background-color: var(--primary);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.btn-submit {
+  width: 100%;
+}
+
+.btn-submit:hover,
+.btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-submit:active,
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-submit:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Variantes */
+.btn-delete,
+.btn-cancel {
+  color: var(--on-danger);
+  background-color: var(--danger);
+}
+
+.btn-delete:hover,
+.btn-cancel:hover {
+  background-color: var(--danger-hover);
+}
+
+/* Botones compactos dentro de la tabla */
+.btn-sm {
+  min-height: 36px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+}
+
+/* Fila de acciones del formulario de edición */
+.form-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.form-actions .btn-submit {
+  flex: 1;
+}
+
+/* ---------- Tabla ---------- */
+
+.table-container {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.custom-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border);
+}
+
+.custom-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.custom-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.custom-table tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--surface-2) 45%, transparent);
+}
+
+.custom-table tbody tr:hover {
+  background: var(--surface-hover);
+}
+
+.custom-table .empty-state {
+  padding: 32px 14px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.price-tag {
+  font-weight: 700;
+  color: var(--price);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.acciones {
+  display: flex;
+  gap: 8px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .container {
+    padding: 16px 12px 32px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}
+
+/* ---------- Preferencias de movimiento ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
