@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FormularioConsulta from './components/FormularioConsulta'; 
 import ListaConsultas from './components/ListaConsultas';   
-import './app.css'    
 
 const API_URL = 'https://veterinaria-6svw.onrender.com';
 
