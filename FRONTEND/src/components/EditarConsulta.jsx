@@ -35,7 +35,7 @@ function EditarConsulta({ consulta, onUpdate, onCancel }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:3000/consultas/${consulta.id}`, formData)
+    axios.put(`https://veterinaria-6svw.onrender.com/consultas/${consulta.id}`, formData)
       .then(res => {
         alert(res.data.message || 'Consulta actualizada correctamente');
         onUpdate(); // Refresca la lista y cierra el modal/formulario de edición
